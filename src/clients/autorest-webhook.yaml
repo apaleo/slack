@@ -1,0 +1,9 @@
+---
+typescript: true
+input-file: swagger.json
+output-folder: webhook
+add-credentials: true
+generate-metadata: false
+enum-types: true
+clear-output-folder: true
+source-code-folder-path: './'
