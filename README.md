@@ -1,6 +1,11 @@
 # slack
 apaleo and Slack integration
 
+### How to install in Slack?
+1. [Install app to your Slack workspace](https://slack.apaleo.com/slack/install)
+2. In slack type `/apaleo configure` and authorize access to your apaleo account
+3. Type `/apaleo help` to get list of available commands
+
 ### How to run locally?
 In order to build the project locally:
 1. Create `.env` file based on the structure in `.env.sample`
