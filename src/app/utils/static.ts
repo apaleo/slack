@@ -3,6 +3,7 @@ import { RespondArguments } from '@slack/bolt';
 export const httpOkStatusCode = 200;
 export const httpCreatedStatusCode = 201;
 export const httpNoContentStatusCode = 204;
+export const httpTempRedirectStatusCode = 302;
 export const httpBadRequestStatusCode = 400;
 export const httpUnauthorizedStatusCode = 401;
 export const httpNotFoundStatusCode = 404;
