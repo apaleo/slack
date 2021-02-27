@@ -90,7 +90,7 @@ export const enableRoutes = (router: Router) => {
         preferredUsername,
         accountCode
       );
-      await getSlackApp().client.chat.postEphemeral({
+      await (await getSlackApp()).client.chat.postEphemeral({
         token: authRequest.botToken,
         channel: authRequest.channelId,
         blocks: authSuccessMarkup.blocks,

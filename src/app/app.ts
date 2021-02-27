@@ -7,14 +7,14 @@ import * as events from './slack/events';
 import { getSlackApp } from './slack-app';
 import { initDatabaseConnection } from './app-helpers';
 
-const app = getSlackApp();
-
-actions.register(app);
-commands.register(app);
-events.register(app);
-
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
 (async () => {
+  const app = await getSlackApp();
+
+  actions.register(app);
+  commands.register(app);
+  events.register(app);
+
   await initDatabaseConnection();
 
   await app.start(localPort);

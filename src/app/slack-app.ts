@@ -58,19 +58,20 @@ const installationStore: InstallationStore = {
   }
 };
 
-const initReceiver = (): ExpressReceiver => {
+const initReceiver = async (): Promise<ExpressReceiver> => {
+  const scopes = [
+    'app_mentions:read',
+    'commands',
+    'chat:write',
+    'chat:write.public',
+    'users:read'
+  ];
   const receiver = new ExpressReceiver({
     clientId: slack.clientId,
     clientSecret: slack.clientSecret,
     stateSecret: slack.stateSecret,
     signingSecret: slack.signingSecret,
-    scopes: [
-      'app_mentions:read',
-      'commands',
-      'chat:write',
-      'chat:write.public',
-      'users:read'
-    ],
+    scopes,
     endpoints: {
       actions: '/api/slack/events',
       events: '/api/slack/events',
@@ -79,18 +80,19 @@ const initReceiver = (): ExpressReceiver => {
     installationStore
   });
 
+  const installUrl = await ensureDefined(receiver.installer).generateInstallUrl({ scopes });
   receiver.router.use(bodyParser.json());
-  routers.enableRoutes(receiver.router);
+  routers.enableRoutes(receiver.router, installUrl);
 
   return receiver;
 };
 
-export const getSlackApp = (): App => {
+export const getSlackApp = async (): Promise<App> => {
   if (!slackApp) {
     slackApp = new App({
       clientId: slack.clientId,
       clientSecret: slack.clientSecret,
-      receiver: initReceiver()
+      receiver: await initReceiver()
     });
     /* eslint-disable-next-line require-await, @typescript-eslint/require-await */
     slackApp.error(async (error: CodedError) => {
