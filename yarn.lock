@@ -17,10 +17,10 @@
     "@azure/abort-controller" "^1.0.0"
     tslib "^2.0.0"
 
-"@azure/core-http@^1.1.4":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@azure/core-http/-/core-http-1.2.2.tgz#a6f7717184fd2657d3acabd1d64dfdc0bd531ce3"
-  integrity sha512-9eu2OcbR7e44gqBy4U1Uv8NTWgLIMwKXMEGgO2MahsJy5rdTiAhs5fJHQffPq8uX2MFh21iBODwO9R/Xlov88A==
+"@azure/core-http@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@azure/core-http/-/core-http-1.2.3.tgz#b1e459f6705df1f8d09bf6582292891c04bcace1"
+  integrity sha512-g5C1zUJO5dehP2Riv+vy9iCYoS1UwKnZsBVCzanScz9A83LbnXKpZDa9wie26G9dfXUhQoFZoFT8LYWhPKmwcg==
   dependencies:
     "@azure/abort-controller" "^1.0.0"
     "@azure/core-auth" "^1.1.3"
