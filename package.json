@@ -13,7 +13,7 @@
     "openid-client": "^4.4.0",
     "pg": "^8.5.1",
     "reflect-metadata": "^0.1.13",
-    "tslib": "^2.1.0",
+    "tslib": "^2.2.0",
     "typeorm": "0.2.32"
   },
   "scripts": {
