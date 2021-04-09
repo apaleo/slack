@@ -1,5 +1,5 @@
 # Build stage
-FROM node:14.15.0-alpine as builder
+FROM node:14.15.2-alpine as builder
 
 WORKDIR /usr/src/slack
 
@@ -11,7 +11,7 @@ COPY . ./
 RUN yarn build
 
 # Production stage
-FROM node:14.15.0-alpine
+FROM node:14.15.2-alpine
 
 WORKDIR /usr/src/slack
 ENV NODE_ENV=production
