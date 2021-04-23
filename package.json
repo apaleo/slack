@@ -11,7 +11,7 @@
     "dotenv": "^8.2.0",
     "lodash": "^4.17.21",
     "openid-client": "^4.6.0",
-    "pg": "^8.5.1",
+    "pg": "^8.6.0",
     "reflect-metadata": "^0.1.13",
     "tslib": "^2.2.0",
     "typeorm": "0.2.32"
