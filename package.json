@@ -10,7 +10,7 @@
     "@types/webpack-env": "^1.16.0",
     "dotenv": "^8.2.0",
     "lodash": "^4.17.21",
-    "openid-client": "^4.6.0",
+    "openid-client": "^4.7.2",
     "pg": "^8.5.1",
     "reflect-metadata": "^0.1.13",
     "tslib": "^2.2.0",
