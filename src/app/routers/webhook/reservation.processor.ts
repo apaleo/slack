@@ -1,7 +1,7 @@
-import { Dictionary, isEmpty } from 'lodash';
+import { Dictionary } from 'lodash';
 import { ChatPostMessageArguments, WebClient } from '@slack/web-api';
 import { ApaleoCoreApiService } from 'src/apaleo/apaleo-core-api.service';
-import { reservationWithMessagesCreatedMarkup } from 'src/slack/views/reservation-with-messages-created.blocks';
+import { reservationCreatedMarkup } from 'src/slack/views/reservation-with-messages-created.blocks';
 import { ApaleoRefreshTokenFailedException } from 'src/utils/exceptions';
 import { ReservationModel } from 'clients/booking';
 import { ChannelSubscription } from 'src/entity/ChannelSubscription';
@@ -51,9 +51,7 @@ function getMarkupFor(
 ): Markup | undefined {
   switch (webhook.type) {
     case 'created':
-      return !isEmpty(reservation.validationMessages)
-        ? reservationWithMessagesCreatedMarkup(reservation)
-        : undefined;
+      return reservationCreatedMarkup(reservation);
     case 'set-to-no-show':
       return reservationNoShowMarkup(reservation);
     default:
