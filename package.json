@@ -4,7 +4,7 @@
   "description": "apaleo and Slack integration",
   "main": "dist/app.js",
   "dependencies": {
-    "@azure/core-http": "^1.2.4",
+    "@azure/core-http": "^1.2.6",
     "@slack/bolt": "^3.3.0",
     "@slack/oauth": "^2.0.0",
     "@types/webpack-env": "^1.16.0",
@@ -38,7 +38,7 @@
   },
   "homepage": "https://github.com/apaleo/slack#readme",
   "devDependencies": {
-    "@types/express": "^4.17.11",
+    "@types/express": "^4.17.12",
     "@types/lodash": "^4.14.170",
     "@types/pg": "^7.14.11",
     "@types/node": "^15.0.3",

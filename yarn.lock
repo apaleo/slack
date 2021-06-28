@@ -22,10 +22,10 @@
     "@azure/abort-controller" "^1.0.0"
     tslib "^2.0.0"
 
-"@azure/core-http@^1.2.4":
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/@azure/core-http/-/core-http-1.2.4.tgz#7de543f349de2c1033321252debdee4642c398f9"
-  integrity sha512-cNumz3ckyFZY5zWOgcTHSO7AKRVwxbodG8WfcEGcdH+ZJL3KvJEI/vN58H6xk5v3ijulU2x/WPGJqrMVvcI79A==
+"@azure/core-http@^1.2.6":
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/@azure/core-http/-/core-http-1.2.6.tgz#9cd508418572d2062fd3175274219438772bdb65"
+  integrity sha512-odtH7UMKtekc5YQ86xg9GlVHNXR6pq2JgJ5FBo7/jbOjNGdBqcrIVrZx2bevXVJz/uUTSx6vUf62gzTXTfqYSQ==
   dependencies:
     "@azure/abort-controller" "^1.0.0"
     "@azure/core-asynciterator-polyfill" "^1.0.0"
@@ -38,7 +38,7 @@
     node-fetch "^2.6.0"
     process "^0.11.10"
     tough-cookie "^4.0.0"
-    tslib "^2.0.0"
+    tslib "^2.2.0"
     tunnel "^0.0.6"
     uuid "^8.3.0"
     xml2js "^0.4.19"
@@ -322,10 +322,10 @@
     "@types/qs" "*"
     "@types/range-parser" "*"
 
-"@types/express@^4.16.1", "@types/express@^4.17.11":
-  version "4.17.11"
-  resolved "https://registry.yarnpkg.com/@types/express/-/express-4.17.11.tgz#debe3caa6f8e5fcda96b47bd54e2f40c4ee59545"
-  integrity sha512-no+R6rW60JEc59977wIxreQVsIEOAYwgCqldrA/vkpCnbD7MqTefO97lmoBe4WE0F156bC4uLSP1XHDOySnChg==
+"@types/express@^4.16.1", "@types/express@^4.17.12":
+  version "4.17.12"
+  resolved "https://registry.yarnpkg.com/@types/express/-/express-4.17.12.tgz#4bc1bf3cd0cfe6d3f6f2853648b40db7d54de350"
+  integrity sha512-pTYas6FrP15B1Oa0bkN5tQMNqOcVXa9j4FTFtO8DWI9kppKib+6NJtfTOOLcwxuuYvcX2+dVG6et1SxW/Kc17Q==
   dependencies:
     "@types/body-parser" "*"
     "@types/express-serve-static-core" "^4.17.18"
