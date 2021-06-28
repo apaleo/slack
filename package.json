@@ -38,7 +38,7 @@
   },
   "homepage": "https://github.com/apaleo/slack#readme",
   "devDependencies": {
-    "@types/express": "^4.17.11",
+    "@types/express": "^4.17.12",
     "@types/lodash": "^4.14.170",
     "@types/pg": "^7.14.11",
     "@types/node": "^15.0.3",
