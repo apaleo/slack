@@ -809,6 +809,49 @@ export const Operation: coreHttp.CompositeMapper = {
   }
 };
 
+export const ReplaceBlockModel: coreHttp.CompositeMapper = {
+  type: {
+    name: "Composite",
+    className: "ReplaceBlockModel",
+    modelProperties: {
+      from: {
+        serializedName: "from",
+        required: true,
+        type: {
+          name: "String"
+        }
+      },
+      to: {
+        serializedName: "to",
+        required: true,
+        type: {
+          name: "String"
+        }
+      },
+      grossDailyRate: {
+        serializedName: "grossDailyRate",
+        type: {
+          name: "Composite",
+          className: "MonetaryValueModel"
+        }
+      },
+      timeSlices: {
+        serializedName: "timeSlices",
+        required: true,
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "CreateBlockTimeSliceModel"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
 export const CreateBookingModel: coreHttp.CompositeMapper = {
   type: {
     name: "Composite",
@@ -852,6 +895,12 @@ export const CreateBookingModel: coreHttp.CompositeMapper = {
             }
           }
         }
+      },
+      transactionReference: {
+        serializedName: "transactionReference",
+        type: {
+          name: "String"
+        }
       }
     }
   }
@@ -864,35 +913,30 @@ export const CreatePaymentAccountModel: coreHttp.CompositeMapper = {
     modelProperties: {
       accountNumber: {
         serializedName: "accountNumber",
-        required: true,
         type: {
           name: "String"
         }
       },
       accountHolder: {
         serializedName: "accountHolder",
-        required: true,
         type: {
           name: "String"
         }
       },
       expiryMonth: {
         serializedName: "expiryMonth",
-        required: true,
         type: {
           name: "String"
         }
       },
       expiryYear: {
         serializedName: "expiryYear",
-        required: true,
         type: {
           name: "String"
         }
       },
       paymentMethod: {
         serializedName: "paymentMethod",
-        required: true,
         type: {
           name: "String"
         }
@@ -920,6 +964,12 @@ export const CreatePaymentAccountModel: coreHttp.CompositeMapper = {
         type: {
           name: "Boolean"
         }
+      },
+      inactiveReason: {
+        serializedName: "inactiveReason",
+        type: {
+          name: "String"
+        }
       }
     }
   }
@@ -934,7 +984,7 @@ export const BookerModel: coreHttp.CompositeMapper = {
         serializedName: "title",
         type: {
           name: "Enum",
-          allowedValues: ["Mr", "Ms", "Dr", "Prof", "Other"]
+          allowedValues: ["Mr", "Ms", "Dr", "Prof", "Mrs", "Other"]
         }
       },
       gender: {
@@ -1070,6 +1120,12 @@ export const PersonAddressModel: coreHttp.CompositeMapper = {
           name: "String"
         }
       },
+      regionCode: {
+        serializedName: "regionCode",
+        type: {
+          name: "String"
+        }
+      },
       countryCode: {
         serializedName: "countryCode",
         type: {
@@ -1167,7 +1223,8 @@ export const CreateReservationModel: coreHttp.CompositeMapper = {
             "Ibe",
             "ChannelManager",
             "Expedia",
-            "Homelike"
+            "Homelike",
+            "Hrs"
           ]
         }
       },
@@ -1280,7 +1337,7 @@ export const GuestModel: coreHttp.CompositeMapper = {
         serializedName: "title",
         type: {
           name: "Enum",
-          allowedValues: ["Mr", "Ms", "Dr", "Prof", "Other"]
+          allowedValues: ["Mr", "Ms", "Dr", "Prof", "Mrs", "Other"]
         }
       },
       gender: {
@@ -1658,35 +1715,30 @@ export const PaymentAccountModel: coreHttp.CompositeMapper = {
     modelProperties: {
       accountNumber: {
         serializedName: "accountNumber",
-        required: true,
         type: {
           name: "String"
         }
       },
       accountHolder: {
         serializedName: "accountHolder",
-        required: true,
         type: {
           name: "String"
         }
       },
       expiryMonth: {
         serializedName: "expiryMonth",
-        required: true,
         type: {
           name: "String"
         }
       },
       expiryYear: {
         serializedName: "expiryYear",
-        required: true,
         type: {
           name: "String"
         }
       },
       paymentMethod: {
         serializedName: "paymentMethod",
-        required: true,
         type: {
           name: "String"
         }
@@ -1714,6 +1766,12 @@ export const PaymentAccountModel: coreHttp.CompositeMapper = {
         required: true,
         type: {
           name: "Boolean"
+        }
+      },
+      inactiveReason: {
+        serializedName: "inactiveReason",
+        type: {
+          name: "String"
         }
       }
     }
@@ -1763,7 +1821,8 @@ export const BookingReservationModel: coreHttp.CompositeMapper = {
             "Ibe",
             "ChannelManager",
             "Expedia",
-            "Homelike"
+            "Homelike",
+            "Hrs"
           ]
         }
       },
@@ -1863,6 +1922,13 @@ export const BookingReservationModel: coreHttp.CompositeMapper = {
         type: {
           name: "Composite",
           className: "ReservationCancellationFeeModel"
+        }
+      },
+      noShowFee: {
+        serializedName: "noShowFee",
+        type: {
+          name: "Composite",
+          className: "ReservationNoShowFeeModel"
         }
       },
       company: {
@@ -2052,6 +2118,50 @@ export const ReservationCancellationFeeModel: coreHttp.CompositeMapper = {
   }
 };
 
+export const ReservationNoShowFeeModel: coreHttp.CompositeMapper = {
+  type: {
+    name: "Composite",
+    className: "ReservationNoShowFeeModel",
+    modelProperties: {
+      id: {
+        serializedName: "id",
+        required: true,
+        type: {
+          name: "String"
+        }
+      },
+      code: {
+        serializedName: "code",
+        required: true,
+        type: {
+          name: "String"
+        }
+      },
+      name: {
+        serializedName: "name",
+        required: true,
+        type: {
+          name: "String"
+        }
+      },
+      description: {
+        serializedName: "description",
+        required: true,
+        type: {
+          name: "String"
+        }
+      },
+      fee: {
+        serializedName: "fee",
+        type: {
+          name: "Composite",
+          className: "MonetaryValueModel"
+        }
+      }
+    }
+  }
+};
+
 export const EmbeddedCompanyModel: coreHttp.CompositeMapper = {
   type: {
     name: "Composite",
@@ -2102,6 +2212,12 @@ export const AddReservationsModel: coreHttp.CompositeMapper = {
               className: "CreateReservationModel"
             }
           }
+        }
+      },
+      transactionReference: {
+        serializedName: "transactionReference",
+        type: {
+          name: "String"
         }
       }
     }
@@ -3144,6 +3260,20 @@ export const OfferNoShowFeeModel: coreHttp.CompositeMapper = {
           name: "String"
         }
       },
+      name: {
+        serializedName: "name",
+        required: true,
+        type: {
+          name: "String"
+        }
+      },
+      description: {
+        serializedName: "description",
+        required: true,
+        type: {
+          name: "String"
+        }
+      },
       fee: {
         serializedName: "fee",
         type: {
@@ -4036,7 +4166,8 @@ export const ReservationItemModel: coreHttp.CompositeMapper = {
             "Ibe",
             "ChannelManager",
             "Expedia",
-            "Homelike"
+            "Homelike",
+            "Hrs"
           ]
         }
       },
@@ -4253,36 +4384,6 @@ export const EmbeddedUnitModel: coreHttp.CompositeMapper = {
         serializedName: "unitGroupId",
         type: {
           name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const ReservationNoShowFeeModel: coreHttp.CompositeMapper = {
-  type: {
-    name: "Composite",
-    className: "ReservationNoShowFeeModel",
-    modelProperties: {
-      id: {
-        serializedName: "id",
-        required: true,
-        type: {
-          name: "String"
-        }
-      },
-      code: {
-        serializedName: "code",
-        required: true,
-        type: {
-          name: "String"
-        }
-      },
-      fee: {
-        serializedName: "fee",
-        type: {
-          name: "Composite",
-          className: "MonetaryValueModel"
         }
       }
     }
@@ -4867,7 +4968,8 @@ export const ReservationModel: coreHttp.CompositeMapper = {
             "Ibe",
             "ChannelManager",
             "Expedia",
-            "Homelike"
+            "Homelike",
+            "Hrs"
           ]
         }
       },
@@ -4974,6 +5076,18 @@ export const ReservationModel: coreHttp.CompositeMapper = {
         type: {
           name: "Composite",
           className: "MonetaryValueModel"
+        }
+      },
+      assignedUnits: {
+        serializedName: "assignedUnits",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "ReservationAssignedUnitModel"
+            }
+          }
         }
       },
       validationMessages: {

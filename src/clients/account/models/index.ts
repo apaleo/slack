@@ -26,6 +26,10 @@ export interface AccountModel {
    * Type of the account
    */
   type: AccountType;
+  /**
+   * The list of supported countries
+   */
+  additionallySupportedCountries?: string[];
 }
 
 export interface AddressModel {
@@ -33,6 +37,7 @@ export interface AddressModel {
   addressLine2?: string;
   postalCode: string;
   city: string;
+  regionCode?: string;
   countryCode: string;
 }
 
@@ -60,6 +65,10 @@ export interface ReplaceAccountModel {
    */
   logoUrl?: string;
   location?: CreateAddressModel;
+  /**
+   * The list of supported countries
+   */
+  additionallySupportedCountries?: string[];
 }
 
 export interface CreateAddressModel {
@@ -67,6 +76,10 @@ export interface CreateAddressModel {
   addressLine2?: string;
   postalCode: string;
   city: string;
+  /**
+   * The ISO 3166-2 code
+   */
+  regionCode?: string;
   /**
    * The country code, in ISO 3166-1 alpha-2 code
    */
@@ -129,6 +142,10 @@ export interface CreateAccountModel {
    */
   type: AccountType;
   location?: CreateAddressModel;
+  /**
+   * The list of supported countries
+   */
+  additionallySupportedCountries?: string[];
 }
 
 export interface AccountCreatedModel {
@@ -266,6 +283,26 @@ export type ApaleoAccountAPIAccountAccountsPostResponse = ApaleoAccountAPIAccoun
  * Contains response data for the accountActionsCurrentSuspendPut operation.
  */
 export type ApaleoAccountAPIAccountActionsCurrentSuspendPutResponse = MessageItemCollection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: coreHttp.HttpResponse & {
+    /**
+     * The response body as text (string format)
+     */
+    bodyAsText: string;
+
+    /**
+     * The response body as parsed JSON or XML
+     */
+    parsedBody: MessageItemCollection;
+  };
+};
+
+/**
+ * Contains response data for the accountActionsCurrentLivePut operation.
+ */
+export type ApaleoAccountAPIAccountActionsCurrentLivePutResponse = MessageItemCollection & {
   /**
    * The underlying HTTP response.
    */

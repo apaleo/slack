@@ -6,6 +6,7 @@ import {
 } from "@azure/core-http";
 import {
   CreateBlockModel as CreateBlockModelMapper,
+  ReplaceBlockModel as ReplaceBlockModelMapper,
   CreateBookingModel as CreateBookingModelMapper,
   AddReservationsModel as AddReservationsModelMapper,
   CreateGroupModel as CreateGroupModelMapper,
@@ -306,6 +307,11 @@ export const body1: OperationParameter = {
 
 export const body2: OperationParameter = {
   parameterPath: "body",
+  mapper: ReplaceBlockModelMapper
+};
+
+export const body3: OperationParameter = {
+  parameterPath: "body",
   mapper: CreateBookingModelMapper
 };
 
@@ -334,7 +340,8 @@ export const channelCode: OperationQueryParameter = {
             "Ibe",
             "ChannelManager",
             "Expedia",
-            "Homelike"
+            "Homelike",
+            "Hrs"
           ]
         }
       }
@@ -379,7 +386,7 @@ export const expand2: OperationQueryParameter = {
   collectionFormat: QueryCollectionFormat.Csv
 };
 
-export const body3: OperationParameter = {
+export const body4: OperationParameter = {
   parameterPath: "body",
   mapper: AddReservationsModelMapper
 };
@@ -400,7 +407,7 @@ export const expand3: OperationQueryParameter = {
   collectionFormat: QueryCollectionFormat.Csv
 };
 
-export const body4: OperationParameter = {
+export const body5: OperationParameter = {
   parameterPath: "body",
   mapper: CreateGroupModelMapper
 };
@@ -437,7 +444,7 @@ export const expand5: OperationQueryParameter = {
   collectionFormat: QueryCollectionFormat.Csv
 };
 
-export const body5: OperationParameter = {
+export const body6: OperationParameter = {
   parameterPath: "body",
   mapper: PickUpReservationsModelMapper
 };
@@ -487,7 +494,8 @@ export const channelCode1: OperationQueryParameter = {
         "Ibe",
         "ChannelManager",
         "Expedia",
-        "Homelike"
+        "Homelike",
+        "Hrs"
       ]
     }
   }
@@ -606,7 +614,8 @@ export const channelCode2: OperationQueryParameter = {
         "Ibe",
         "ChannelManager",
         "Expedia",
-        "Homelike"
+        "Homelike",
+        "Hrs"
       ]
     }
   }
@@ -910,12 +919,12 @@ export const withCityTax: OperationQueryParameter = {
   }
 };
 
-export const body6: OperationParameter = {
+export const body7: OperationParameter = {
   parameterPath: "body",
   mapper: DesiredStayDetailsModelMapper
 };
 
-export const body7: OperationParameter = {
+export const body8: OperationParameter = {
   parameterPath: "body",
   mapper: BookReservationServiceModelMapper
 };

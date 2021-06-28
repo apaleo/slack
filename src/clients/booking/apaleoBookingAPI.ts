@@ -20,6 +20,8 @@ import {
   ApaleoBookingAPIBookingBlockActionsByIdReleasePutResponse,
   ApaleoBookingAPIBookingBlockActionsByIdCancelPutResponse,
   ApaleoBookingAPIBookingBlockActionsByIdWashPutResponse,
+  ReplaceBlockModel,
+  ApaleoBookingAPIBookingBlockActionsByIdAmendPutResponse,
   CreateBookingModel,
   ApaleoBookingAPIBookingBookingsPostOptionalParams,
   ApaleoBookingAPIBookingBookingsPostResponse,
@@ -317,6 +319,27 @@ export class ApaleoBookingAPI extends ApaleoBookingAPIContext {
       { id, options: operationOptions },
       bookingBlockActionsByIdWashPutOperationSpec
     ) as Promise<ApaleoBookingAPIBookingBlockActionsByIdWashPutResponse>;
+  }
+
+  /**
+   * Use this call to modify a block.<br>You must have at least one of these scopes: 'blocks.manage,
+   * reservations.manage'.
+   * @param id Id of the block to be modified.
+   * @param body The definition of the block.
+   * @param options The options parameters.
+   */
+  bookingBlockActionsByIdAmendPut(
+    id: string,
+    body: ReplaceBlockModel,
+    options?: coreHttp.OperationOptions
+  ): Promise<ApaleoBookingAPIBookingBlockActionsByIdAmendPutResponse> {
+    const operationOptions: coreHttp.RequestOptionsBase = coreHttp.operationOptionsToRequestOptionsBase(
+      options || {}
+    );
+    return this.sendOperationRequest(
+      { id, body, options: operationOptions },
+      bookingBlockActionsByIdAmendPutOperationSpec
+    ) as Promise<ApaleoBookingAPIBookingBlockActionsByIdAmendPutResponse>;
   }
 
   /**
@@ -886,8 +909,8 @@ export class ApaleoBookingAPI extends ApaleoBookingAPIContext {
   }
 
   /**
-   * Removes a service from a reservation. The service will not be removed if it is already posted or if
-   * the service date is in the past.<br>You must have this scope: 'reservations.manage'.
+   * Removes a service from a reservation. The service will not be removed if it is mandatory, already
+   * posted or if the service date is in the past.<br>You must have this scope: 'reservations.manage'.
    * @param id Id of the reservation.
    * @param serviceId The id of the service to delete
    * @param options The options parameters.
@@ -1462,6 +1485,28 @@ const bookingBlockActionsByIdWashPutOperationSpec: coreHttp.OperationSpec = {
   headerParameters: [Parameters.accept1],
   serializer
 };
+const bookingBlockActionsByIdAmendPutOperationSpec: coreHttp.OperationSpec = {
+  path: "/booking/v1/block-actions/{id}/amend",
+  httpMethod: "PUT",
+  responses: {
+    204: {},
+    400: {},
+    401: {},
+    403: {},
+    404: {},
+    415: {},
+    422: {
+      bodyMapper: Mappers.MessageItemCollection
+    },
+    500: {},
+    503: {}
+  },
+  requestBody: Parameters.body2,
+  urlParameters: [Parameters.$host, Parameters.id],
+  headerParameters: [Parameters.contentType, Parameters.accept],
+  mediaType: "json",
+  serializer
+};
 const bookingBookingsPostOperationSpec: coreHttp.OperationSpec = {
   path: "/booking/v1/bookings",
   httpMethod: "POST",
@@ -1481,7 +1526,7 @@ const bookingBookingsPostOperationSpec: coreHttp.OperationSpec = {
     500: {},
     503: {}
   },
-  requestBody: Parameters.body2,
+  requestBody: Parameters.body3,
   urlParameters: [Parameters.$host],
   headerParameters: [
     Parameters.contentType,
@@ -1542,7 +1587,7 @@ const bookingBookingsForcePostOperationSpec: coreHttp.OperationSpec = {
     500: {},
     503: {}
   },
-  requestBody: Parameters.body2,
+  requestBody: Parameters.body3,
   urlParameters: [Parameters.$host],
   headerParameters: [
     Parameters.contentType,
@@ -1572,7 +1617,7 @@ const bookingBookingsByIdReservationsPostOperationSpec: coreHttp.OperationSpec =
     500: {},
     503: {}
   },
-  requestBody: Parameters.body3,
+  requestBody: Parameters.body4,
   urlParameters: [Parameters.$host, Parameters.id],
   headerParameters: [
     Parameters.contentType,
@@ -1602,7 +1647,7 @@ const bookingBookingsByIdReservationsForcePostOperationSpec: coreHttp.OperationS
     500: {},
     503: {}
   },
-  requestBody: Parameters.body3,
+  requestBody: Parameters.body4,
   urlParameters: [Parameters.$host, Parameters.id],
   headerParameters: [
     Parameters.contentType,
@@ -1675,7 +1720,7 @@ const bookingGroupsPostOperationSpec: coreHttp.OperationSpec = {
     500: {},
     503: {}
   },
-  requestBody: Parameters.body4,
+  requestBody: Parameters.body5,
   urlParameters: [Parameters.$host],
   headerParameters: [
     Parameters.contentType,
@@ -1833,7 +1878,7 @@ const bookingGroupsByIdReservationsPostOperationSpec: coreHttp.OperationSpec = {
     500: {},
     503: {}
   },
-  requestBody: Parameters.body5,
+  requestBody: Parameters.body6,
   urlParameters: [Parameters.$host, Parameters.id],
   headerParameters: [
     Parameters.contentType,
@@ -2124,6 +2169,7 @@ const bookingReservationsByIdOffersGetOperationSpec: coreHttp.OperationSpec = {
     503: {}
   },
   queryParameters: [
+    Parameters.unitGroupIds,
     Parameters.channelCode1,
     Parameters.promoCode,
     Parameters.childrenAges,
@@ -2345,53 +2391,6 @@ const bookingReservationActionsByIdAmendPutOperationSpec: coreHttp.OperationSpec
   path: "/booking/v1/reservation-actions/{id}/amend",
   httpMethod: "PUT",
   responses: {
-    200: {},
-    204: {},
-    400: {},
-    401: {},
-    403: {},
-    404: {},
-    415: {},
-    422: {
-      bodyMapper: Mappers.MessageItemCollection
-    },
-    500: {},
-    503: {}
-  },
-  requestBody: Parameters.body6,
-  urlParameters: [Parameters.$host, Parameters.id],
-  headerParameters: [Parameters.contentType, Parameters.accept],
-  mediaType: "json",
-  serializer
-};
-const bookingReservationActionsByIdAmendForcePutOperationSpec: coreHttp.OperationSpec = {
-  path: "/booking/v1/reservation-actions/{id}/amend/$force",
-  httpMethod: "PUT",
-  responses: {
-    200: {},
-    204: {},
-    400: {},
-    401: {},
-    403: {},
-    404: {},
-    415: {},
-    422: {
-      bodyMapper: Mappers.MessageItemCollection
-    },
-    500: {},
-    503: {}
-  },
-  requestBody: Parameters.body6,
-  urlParameters: [Parameters.$host, Parameters.id],
-  headerParameters: [Parameters.contentType, Parameters.accept],
-  mediaType: "json",
-  serializer
-};
-const bookingReservationActionsByIdBookServicePutOperationSpec: coreHttp.OperationSpec = {
-  path: "/booking/v1/reservation-actions/{id}/book-service",
-  httpMethod: "PUT",
-  responses: {
-    200: {},
     204: {},
     400: {},
     401: {},
@@ -2410,11 +2409,54 @@ const bookingReservationActionsByIdBookServicePutOperationSpec: coreHttp.Operati
   mediaType: "json",
   serializer
 };
+const bookingReservationActionsByIdAmendForcePutOperationSpec: coreHttp.OperationSpec = {
+  path: "/booking/v1/reservation-actions/{id}/amend/$force",
+  httpMethod: "PUT",
+  responses: {
+    204: {},
+    400: {},
+    401: {},
+    403: {},
+    404: {},
+    415: {},
+    422: {
+      bodyMapper: Mappers.MessageItemCollection
+    },
+    500: {},
+    503: {}
+  },
+  requestBody: Parameters.body7,
+  urlParameters: [Parameters.$host, Parameters.id],
+  headerParameters: [Parameters.contentType, Parameters.accept],
+  mediaType: "json",
+  serializer
+};
+const bookingReservationActionsByIdBookServicePutOperationSpec: coreHttp.OperationSpec = {
+  path: "/booking/v1/reservation-actions/{id}/book-service",
+  httpMethod: "PUT",
+  responses: {
+    204: {},
+    400: {},
+    401: {},
+    403: {},
+    404: {},
+    415: {},
+    422: {
+      bodyMapper: Mappers.MessageItemCollection
+    },
+    500: {},
+    503: {}
+  },
+  requestBody: Parameters.body8,
+  urlParameters: [Parameters.$host, Parameters.id],
+  headerParameters: [Parameters.contentType, Parameters.accept],
+  mediaType: "json",
+  serializer
+};
 const bookingReservationActionsByIdRemoveCityTaxPutOperationSpec: coreHttp.OperationSpec = {
   path: "/booking/v1/reservation-actions/{id}/remove-city-tax",
   httpMethod: "PUT",
   responses: {
-    200: {},
     204: {},
     400: {},
     401: {},
@@ -2434,7 +2476,6 @@ const bookingReservationActionsByIdAddCityTaxPutOperationSpec: coreHttp.Operatio
   path: "/booking/v1/reservation-actions/{id}/add-city-tax",
   httpMethod: "PUT",
   responses: {
-    200: {},
     204: {},
     400: {},
     401: {},
