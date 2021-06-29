@@ -12,7 +12,8 @@ import {
   CreateAccountModel,
   ApaleoAccountAPIAccountAccountsPostOptionalParams,
   ApaleoAccountAPIAccountAccountsPostResponse,
-  ApaleoAccountAPIAccountActionsCurrentSuspendPutResponse
+  ApaleoAccountAPIAccountActionsCurrentSuspendPutResponse,
+  ApaleoAccountAPIAccountActionsCurrentLivePutResponse
 } from "./models";
 
 export class ApaleoAccountAPI extends ApaleoAccountAPIContext {
@@ -102,7 +103,7 @@ export class ApaleoAccountAPI extends ApaleoAccountAPIContext {
 
   /**
    * Suspends the current account.
-   * This changes the account type to 'Suspended'.<br>You must have this scope: 'account.suspend'.
+   * This changes the account type to 'Suspended'.<br>You must have this scope: 'account.manage'.
    * @param options The options parameters.
    */
   accountActionsCurrentSuspendPut(
@@ -115,6 +116,23 @@ export class ApaleoAccountAPI extends ApaleoAccountAPIContext {
       { options: operationOptions },
       accountActionsCurrentSuspendPutOperationSpec
     ) as Promise<ApaleoAccountAPIAccountActionsCurrentSuspendPutResponse>;
+  }
+
+  /**
+   * Move the current account to live.
+   * This changes the account type to 'Live'.<br>You must have this scope: 'account.manage'.
+   * @param options The options parameters.
+   */
+  accountActionsCurrentLivePut(
+    options?: coreHttp.OperationOptions
+  ): Promise<ApaleoAccountAPIAccountActionsCurrentLivePutResponse> {
+    const operationOptions: coreHttp.RequestOptionsBase = coreHttp.operationOptionsToRequestOptionsBase(
+      options || {}
+    );
+    return this.sendOperationRequest(
+      { options: operationOptions },
+      accountActionsCurrentLivePutOperationSpec
+    ) as Promise<ApaleoAccountAPIAccountActionsCurrentLivePutResponse>;
   }
 }
 // Operation Specifications
@@ -219,6 +237,25 @@ const accountAccountsPostOperationSpec: coreHttp.OperationSpec = {
 };
 const accountActionsCurrentSuspendPutOperationSpec: coreHttp.OperationSpec = {
   path: "/account/v1/account-actions/current/suspend",
+  httpMethod: "PUT",
+  responses: {
+    204: {},
+    400: {},
+    401: {},
+    403: {},
+    404: {},
+    422: {
+      bodyMapper: Mappers.MessageItemCollection
+    },
+    500: {},
+    503: {}
+  },
+  urlParameters: [Parameters.$host],
+  headerParameters: [Parameters.accept],
+  serializer
+};
+const accountActionsCurrentLivePutOperationSpec: coreHttp.OperationSpec = {
+  path: "/account/v1/account-actions/current/live",
   httpMethod: "PUT",
   responses: {
     204: {},

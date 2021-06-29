@@ -52,6 +52,17 @@ export const AccountModel: coreHttp.CompositeMapper = {
           name: "Enum",
           allowedValues: ["Trial", "Live", "Suspended", "Development"]
         }
+      },
+      additionallySupportedCountries: {
+        serializedName: "additionallySupportedCountries",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
       }
     }
   }
@@ -85,6 +96,12 @@ export const AddressModel: coreHttp.CompositeMapper = {
       city: {
         serializedName: "city",
         required: true,
+        type: {
+          name: "String"
+        }
+      },
+      regionCode: {
+        serializedName: "regionCode",
         type: {
           name: "String"
         }
@@ -151,6 +168,17 @@ export const ReplaceAccountModel: coreHttp.CompositeMapper = {
           name: "Composite",
           className: "CreateAddressModel"
         }
+      },
+      additionallySupportedCountries: {
+        serializedName: "additionallySupportedCountries",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
       }
     }
   }
@@ -184,6 +212,16 @@ export const CreateAddressModel: coreHttp.CompositeMapper = {
       city: {
         serializedName: "city",
         required: true,
+        type: {
+          name: "String"
+        }
+      },
+      regionCode: {
+        constraints: {
+          MaxLength: 6,
+          MinLength: 2
+        },
+        serializedName: "regionCode",
         type: {
           name: "String"
         }
@@ -328,6 +366,17 @@ export const CreateAccountModel: coreHttp.CompositeMapper = {
         type: {
           name: "Composite",
           className: "CreateAddressModel"
+        }
+      },
+      additionallySupportedCountries: {
+        serializedName: "additionallySupportedCountries",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
         }
       }
     }

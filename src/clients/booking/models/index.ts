@@ -305,6 +305,22 @@ export interface Operation {
   from?: string;
 }
 
+export interface ReplaceBlockModel {
+  /**
+   * Start date and time from which the inventory will be blocked<br />Specify either a pure date or a date and time (without fractional second part) in UTC or with UTC offset as defined in <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO8601:2004</a>
+   */
+  from: string;
+  /**
+   * End date and time until which the inventory will be blocked. Cannot be more than 5 years after the start date.<br />Specify either a pure date or a date and time (without fractional second part) in UTC or with UTC offset as defined in <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO8601:2004</a>
+   */
+  to: string;
+  grossDailyRate: MonetaryValueModel;
+  /**
+   * The list of time slices
+   */
+  timeSlices: CreateBlockTimeSliceModel[];
+}
+
 /**
  * With this request you can create a booking
  */
@@ -323,29 +339,33 @@ export interface CreateBookingModel {
    * List of reservations to create
    */
   reservations: CreateReservationModel[];
+  /**
+   * The reference of a payment transaction. This should be set when a payment transaction has been initiated and should be used to complete the transaction upon reservation creation.
+   */
+  transactionReference?: string;
 }
 
 export interface CreatePaymentAccountModel {
   /**
    * The account number (e.g. masked credit card number or last 4 digits)
    */
-  accountNumber: string;
+  accountNumber?: string;
   /**
    * The account holder (e.g. card holder)
    */
-  accountHolder: string;
+  accountHolder?: string;
   /**
    * The credit card's expiration month
    */
-  expiryMonth: string;
+  expiryMonth?: string;
   /**
    * The credit card's expiration year
    */
-  expiryYear: string;
+  expiryYear?: string;
   /**
    * The payment method (e.g. visa)
    */
-  paymentMethod: string;
+  paymentMethod?: string;
   /**
    * The email address of the shopper / customer
    */
@@ -355,13 +375,17 @@ export interface CreatePaymentAccountModel {
    */
   payerReference?: string;
   /**
-   * The reference of a payment transaction. This should be set when a payment transaction has been already initiated and should be completed upon reservation creation.
+   * The reference of a payment transaction. This should be set when a payment transaction has been initiated and should be used to complete the transaction upon reservation creation. - <b>DEPRECATED: This property will be removed 17.07.2021. Use `TransactionReference` on the booking/reservation model instead</b>
    */
   transactionReference?: string;
   /**
    * Indicates if the payment account is a virtual credit card. If not specified it defaults to 'false'
    */
   isVirtual?: boolean;
+  /**
+   * A reason why account is inactive when PayerReference was not provided
+   */
+  inactiveReason?: string;
 }
 
 export interface BookerModel {
@@ -430,6 +454,7 @@ export interface PersonAddressModel {
   addressLine2?: string;
   postalCode?: string;
   city?: string;
+  regionCode?: string;
   countryCode?: string;
 }
 
@@ -691,23 +716,23 @@ export interface PaymentAccountModel {
   /**
    * The account number (e.g. masked credit card number or last 4 digits)
    */
-  accountNumber: string;
+  accountNumber?: string;
   /**
    * The account holder (e.g. card holder)
    */
-  accountHolder: string;
+  accountHolder?: string;
   /**
    * The credit card's expiration month
    */
-  expiryMonth: string;
+  expiryMonth?: string;
   /**
    * The credit card's expiration year
    */
-  expiryYear: string;
+  expiryYear?: string;
   /**
    * The payment method (e.g. visa)
    */
-  paymentMethod: string;
+  paymentMethod?: string;
   /**
    * The email address of the shopper / customer
    */
@@ -725,6 +750,10 @@ export interface PaymentAccountModel {
    * Indicates if the payment account can be used for capturing payments. A payment account is active, when it has a valid payer reference set
    */
   isActive: boolean;
+  /**
+   * A reason why account is inactive
+   */
+  inactiveReason?: string;
 }
 
 export interface BookingReservationModel {
@@ -778,6 +807,7 @@ export interface BookingReservationModel {
    */
   guestComment?: string;
   cancellationFee: ReservationCancellationFeeModel;
+  noShowFee: ReservationNoShowFeeModel;
   company?: EmbeddedCompanyModel;
 }
 
@@ -856,6 +886,26 @@ export interface ReservationCancellationFeeModel {
   fee: MonetaryValueModel;
 }
 
+export interface ReservationNoShowFeeModel {
+  /**
+   * The id of the no-show policy applied
+   */
+  id: string;
+  /**
+   * The code of the no-show policy applied
+   */
+  code: string;
+  /**
+   * The name of the no-show policy applied
+   */
+  name: string;
+  /**
+   * The description of the no-show policy applied
+   */
+  description: string;
+  fee: MonetaryValueModel;
+}
+
 export interface EmbeddedCompanyModel {
   /**
    * The company ID
@@ -883,6 +933,10 @@ export interface AddReservationsModel {
    * List of reservations to add to the existing booking
    */
   reservations: CreateReservationModel[];
+  /**
+   * The reference of a payment transaction. This should be set when a payment transaction has been initiated and should be used to complete the transaction upon reservation creation.
+   */
+  transactionReference?: string;
 }
 
 export interface ReservationsCreatedModel {
@@ -1301,6 +1355,14 @@ export interface OfferNoShowFeeModel {
    * The code of the no-show policy applied
    */
   code: string;
+  /**
+   * The name of the no-show policy applied
+   */
+  name: string;
+  /**
+   * The description of the no-show policy applied
+   */
+  description: string;
   fee: MonetaryValueModel;
 }
 
@@ -1738,18 +1800,6 @@ export interface EmbeddedUnitModel {
   unitGroupId?: string;
 }
 
-export interface ReservationNoShowFeeModel {
-  /**
-   * The id of the no-show policy applied
-   */
-  id: string;
-  /**
-   * The code of the no-show policy applied
-   */
-  code: string;
-  fee: MonetaryValueModel;
-}
-
 export interface ReservationAssignedUnitModel {
   unit: EmbeddedUnitModel;
   /**
@@ -1963,6 +2013,10 @@ export interface ReservationModel {
    */
   travelPurpose?: TravelPurpose;
   balance: MonetaryValueModel;
+  /**
+   * The list of units assigned to this reservation
+   */
+  assignedUnits?: ReservationAssignedUnitModel[];
   /**
    * Validation rules are applied to reservations during their lifetime.
    * For example a reservation that was created while the house or unit group is already fully booked.
@@ -2327,6 +2381,7 @@ export type Enum8 =
   | "booker"
   | "actions"
   | "company"
+  | "assignedUnits"
   | string;
 /**
  * Defines values for BlockStatus.
@@ -2390,7 +2445,7 @@ export type NotAllowedBlockActionReason =
 /**
  * Defines values for PersonTitle.
  */
-export type PersonTitle = "Mr" | "Ms" | "Dr" | "Prof" | "Other";
+export type PersonTitle = "Mr" | "Ms" | "Dr" | "Prof" | "Mrs" | "Other";
 /**
  * Defines values for Gender.
  */
@@ -2412,7 +2467,8 @@ export type ChannelCode =
   | "Ibe"
   | "ChannelManager"
   | "Expedia"
-  | "Homelike";
+  | "Homelike"
+  | "Hrs";
 /**
  * Defines values for MinGuaranteeType.
  */
@@ -2875,6 +2931,26 @@ export type ApaleoBookingAPIBookingBlockActionsByIdCancelPutResponse = MessageIt
  * Contains response data for the bookingBlockActionsByIdWashPut operation.
  */
 export type ApaleoBookingAPIBookingBlockActionsByIdWashPutResponse = MessageItemCollection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: coreHttp.HttpResponse & {
+    /**
+     * The response body as text (string format)
+     */
+    bodyAsText: string;
+
+    /**
+     * The response body as parsed JSON or XML
+     */
+    parsedBody: MessageItemCollection;
+  };
+};
+
+/**
+ * Contains response data for the bookingBlockActionsByIdAmendPut operation.
+ */
+export type ApaleoBookingAPIBookingBlockActionsByIdAmendPutResponse = MessageItemCollection & {
   /**
    * The underlying HTTP response.
    */
@@ -3823,7 +3899,7 @@ export type ApaleoBookingAPIBookingReservationsCountGetResponse = CountModel & {
 export interface ApaleoBookingAPIBookingReservationsByIdGetOptionalParams
   extends coreHttp.OperationOptions {
   /**
-   * List of all embedded resources that should be expanded in the response. Possible values are: timeSlices, services, booker, actions, company. All other values will be silently ignored.
+   * List of all embedded resources that should be expanded in the response. Possible values are: timeSlices, services, booker, actions, company, assignedUnits. All other values will be silently ignored.
    */
   expand?: Enum8[];
 }
@@ -3873,6 +3949,10 @@ export type ApaleoBookingAPIBookingReservationsByIdPatchResponse = MessageItemCo
  */
 export interface ApaleoBookingAPIBookingReservationsByIdOffersGetOptionalParams
   extends coreHttp.OperationOptions {
+  /**
+   * The list of unit groups used to filter the offers.
+   */
+  unitGroupIds?: string[];
   /**
    * The channel code used to filter the rate plans
    */
